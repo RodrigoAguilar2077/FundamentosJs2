@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider para RGB</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container div {
+            margin-bottom: 15px;
+        }
+        a {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background-color: #8000ff;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #5f00b3;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Selecciona las proporciones</h2>
+        <div>
+            <label for="sliderRojo">Rojo: </label>
+            <input type="range" id="sliderRojo" min="0" max="255" value="0">
+            <span id="valorRojo">0</span>
+        </div>
+        <div>
+            <label for="sliderVerde">Verde: </label>
+            <input type="range" id="sliderVerde" min="0" max="255" value="0">
+            <span id="valorVerde">0</span>
+        </div>
+        <div>
+            <label for="sliderAzul">Azul: </label>
+            <input type="range" id="sliderAzul" min="0" max="255" value="0">
+            <span id="valorAzul">0</span>
+        </div>
+    </div>
+    <a href="/parcial2.html">Menu</a>
+    <script src="slider.js"></script>
+</body>
+</html>
