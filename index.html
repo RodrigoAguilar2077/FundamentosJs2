@@ -25,6 +25,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
         }
 
         h1 {
@@ -32,39 +33,38 @@
         }
 
         .carousel-container {
-            width: 80%;
-            overflow: hidden;
+            width: 100%;
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .image-container {
+        .carousel-track {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.5s ease;
             width: 100%;
         }
 
-        .image-container a {
-            text-decoration: none;
-            margin: 10px;
+        .carousel-item {
+            min-width: 200px;
+            margin: 0 15px;
         }
 
-        .carousel-image {
-            width: 150px;
-            height: 100px;
+        .carousel-item img {
+            width: 200px;
+            height: 150px;
             object-fit: cover;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
         }
 
-        .carousel-image:hover {
+        .carousel-item img:hover {
             transform: scale(1.1);
         }
 
         .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
@@ -72,15 +72,19 @@
             padding: 15px;
             cursor: pointer;
             font-size: 24px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 10;
         }
 
         .nav-btn.left {
-            left: 10px;
+            left: -50px;
         }
 
         .nav-btn.right {
-            right: 10px;
+            right: -50px;
         }
 
         .nav-btn:hover {
@@ -94,6 +98,17 @@
             color: #555;
             font-weight: bold;
         }
+
+        @media (max-width: 600px) {
+            .carousel-item {
+                min-width: 150px;
+            }
+
+            .nav-btn {
+                padding: 10px;
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,16 +116,34 @@
         <h1>Fundamentos JavaScript</h1>
         <div class="carousel-container">
             <button class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
-            <div class="image-container">
-                <a href="./dibujojs/index.html"><img src="../parcial2/dibujo.jpg" alt="Dibujo con Canvas" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/animado/index.html"><img src="../parcial2/animado.jPG" alt="Cuadro Animado" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/animado/index2.html"><img src="../parcial2/circulo.jpg" alt="Círculo Animado" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/bounce/index.html"><img src="../parcial2/pelotita.jpg" alt="Pelotita" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/colorsbg/index.html"><img src="../parcial2/random.jpg" alt="Colores Aleatorios" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/colorsbg/slider.html"><img src="../parcial2/slider.jpg" alt="Slider" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/game/index.html"><img src="../parcial2/snake.jpg" alt="Snake Game" class="carousel-image"></a>
-                <a href="./ejerciciosDOM/colorsbg/index3.html"><img src="../parcial2/modificaciones.jpg" alt="Modificaciones" class="carousel-image"></a>
-                <a href="./todoapp/index.html"><img src="../parcial2/tareas.jpg" alt="App de Tareas" class="carousel-image"></a>
+            <div class="carousel-track">
+                <div class="carousel-item">
+                    <a href="./dibujojs/index.html"><img src="../parcial2/dibujo.jpg" alt="Dibujo con Canvas"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/animado/index.html"><img src="../parcial2/animado.jPG" alt="Cuadro Animado"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/animado/index2.html"><img src="../parcial2/circulo.jpg" alt="Círculo Animado"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/bounce/index.html"><img src="../parcial2/pelotita.jpg" alt="Pelotita"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/colorsbg/index.html"><img src="../parcial2/random.jpg" alt="Colores Aleatorios"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/colorsbg/slider.html"><img src="../parcial2/slider.jpg" alt="Slider"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/game/index.html"><img src="../parcial2/snake.jpg" alt="Snake Game"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./ejerciciosDOM/colorsbg/index3.html"><img src="../parcial2/modificaciones.jpg" alt="Modificaciones"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="./todoapp/index.html"><img src="../parcial2/tareas.jpg" alt="App de Tareas"></a>
+                </div>
             </div>
             <button class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
         </div>
@@ -119,47 +152,34 @@
 
     <script>
         let currentIndex = 0;
-        let autoScrollInterval;
 
         function scrollCarousel(direction) {
-            const imageContainer = document.querySelector('.image-container');
-            const imageWidth = imageContainer.querySelector('img').offsetWidth + 20;
-            const visibleImages = Math.floor(document.querySelector('.carousel-container').offsetWidth / imageWidth);
+            const track = document.querySelector('.carousel-track');
+            const itemWidth = document.querySelector('.carousel-item').offsetWidth + 30;
+            const totalItems = document.querySelectorAll('.carousel-item').length;
+            const visibleItems = Math.floor(document.querySelector('.carousel-container').offsetWidth / itemWidth);
 
             currentIndex += direction;
+
             if (currentIndex < 0) {
                 currentIndex = 0;
-            } else if (currentIndex > imageContainer.children.length - visibleImages) {
-                currentIndex = imageContainer.children.length - visibleImages;
+            } else if (currentIndex > totalItems - visibleItems) {
+                currentIndex = totalItems - visibleItems;
             }
 
-            imageContainer.style.transform = `translateX(${-currentIndex * imageWidth}px)`;
+            track.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
         }
 
-        function startAutoScroll() {
-            autoScrollInterval = setInterval(() => {
-                scrollCarousel(1);
-            }, 3000);
-        }
-
-        function stopAutoScroll() {
-            clearInterval(autoScrollInterval);
-        }
-
-        window.onload = startAutoScroll;
-
-        const images = document.querySelectorAll('.carousel-image');
+        const images = document.querySelectorAll('.carousel-item img');
         const imageName = document.getElementById('imageName');
 
         images.forEach(img => {
             img.addEventListener('mouseover', () => {
-                stopAutoScroll();
                 imageName.textContent = img.alt;
             });
 
             img.addEventListener('mouseout', () => {
                 imageName.textContent = 'Pasa el ratón sobre una imagen';
-                startAutoScroll();
             });
         });
     </script>
